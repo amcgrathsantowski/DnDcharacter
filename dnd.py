@@ -1,3 +1,14 @@
+from distutils.command.install import install
+import sys
+import subprocess
+
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+if __name__ == '__main__':
+    install("numpy")
+
 # playable DnD? We'll see
 import numpy as np
 from math import ceil
@@ -7,8 +18,6 @@ def roll(n):
     Simulate a roll of any size dice
     """
     return np.random.randint(1,n)
-
-print(roll(20))
 
 class Character:
     def __init__(self, name):
@@ -46,113 +55,125 @@ class Character:
                 c = roll(6)
                 d = roll(6)
                 rolls[i] = a+b+c+d - min(a,b,c,d)
-            print("Rolled stats: " + str(rolls))
+            print(f"Rolled stats: {str(rolls)}")
             print("What would you like to assign to each ability score?")
             # --------
             # STRENGTH
             # --------
-            try:
-                strtest =  int(input("Strength: "))
-            except ValueError:
-                print("Error: must be an integer")
-                strtest = int(input("Strength: (must be integer)"))
+            while True:
+                try:
+                    temp =  int(input("Strength: "))
+                except ValueError:
+                    print("Error: must be an integer")
+                else:
+                    break
 
             while True:
-                if strtest in rolls:
-                    self.stre = strtest
-                    rolls.remove(strtest)
+                if temp in rolls:
+                    self.stre = temp
+                    rolls.remove(temp)
                     break
                 else:
-                    print("Error: Input not in the rolls obtained, which are "+ str(rolls))
-                    strtest = int(input("Strength: "))
+                    print(f"Error: Input not in the rolls obtained, which are:{str(rolls)}")
+                    temp = int(input("Strength: "))
 
-            print(rolls)            
+            print(f"remaining rolls: {rolls}")            
 
             # --------
             # DEXTERITY
             # --------
-            try:
-                dextest =  int(input("Dexterity: "))
-            except ValueError:
-                print("Error: must be an integer")
-                dextest = int(input("Dexterity: (must be integer)"))
+            while True:
+                try:
+                    temp =  int(input("Dexterity: "))
+                except ValueError:
+                    print("Error: must be an integer")
+                else:
+                    break
 
             while True:
-                if dextest in rolls:
-                    self.dex = dextest
-                    rolls.remove(dextest)
+                if temp in rolls:
+                    self.dex = temp
+                    rolls.remove(temp)
                     break
                 else:
-                    print("Error: Input not in the rolls obtained, which are "+ str(rolls))
-                    strtest = int(input("Dexterity: "))
+                    print(f"Error: Input not in the rolls obtained, which are:{str(rolls)}")
+                    temp = int(input("Dexterity: "))
             
-            print(rolls)
+            print(f"remaining rolls: {rolls}")            
 
             # ------------
             # CONSTITUTION
             # ------------
-            try:
-                contest =  int(input("Constitution: "))
-            except ValueError:
-                print("Error: must be an integer")
-                contest = int(input("Constitution: (must be integer)"))
+            while True:
+                try:
+                    temp =  int(input("Constitution: "))
+                except ValueError:
+                    print("Error: must be an integer")
+                else:
+                    break
 
             while True:
-                if contest in rolls:
-                    self.con = contest
-                    rolls.remove(contest)
+                if temp in rolls:
+                    self.con = temp
+                    rolls.remove(temp)
                     break
                 else:
-                    print("Error: Input not in the rolls obtained, which are "+ str(rolls))
+                    print(f"Error: Input not in the rolls obtained, which are:{str(rolls)}")
                     contest = int(input("Constitution: "))
             
-            print(rolls)
+            print(f"remaining rolls: {rolls}")            
 
             # ------------
             # INTELLIGENCE
             # ------------
-            try:
-                inttest =  int(input("Intelligence: "))
-            except ValueError:
-                print("Error: must be an integer")
-                inttest = int(input("Inbtelligence: (must be integer)"))
+            while True:
+                try:
+                    temp =  int(input("Intelligence: "))
+                except ValueError:
+                    print("Error: must be an integer")
+                else:
+                    break
 
             while True:
-                if inttest in rolls:
-                    self.int = inttest
-                    rolls.remove(inttest)
+                if temp in rolls:
+                    self.int = temp
+                    rolls.remove(temp)
                     break
                 else:
-                    print("Error: Input not in the rolls obtained, which are "+ str(rolls))
+                    print(f"Error: Input not in the rolls obtained, which are:{str(rolls)}")
                     inttest = int(input("Intelligence: "))
             
-            print(rolls)
+            print(f"remaining rolls: {rolls}")            
 
             # --------
             # WISDOM
             # --------
-            try:
-                wistest =  int(input("Wisdom: "))
-            except ValueError:
-                print("Error: must be an integer")
-                wistest = int(input("Wisdom: (must be integer)"))
+            while True:
+                try:
+                    temp =  int(input("Wisdom: "))
+                except ValueError:
+                    print("Error: must be an integer")
+                else:
+                    break
 
             while True:
-                if wistest in rolls:
-                    self.wis = wistest
-                    rolls.remove(wistest)
+                if temp in rolls:
+                    self.wis = temp
+                    rolls.remove(temp)
                     break
                 else:
-                    print("Error: Input not in the rolls obtained, which are "+ str(rolls))
+                    print(f"Error: Input not in the rolls obtained, which are:{str(rolls)}")
                     wistest = int(input("Wisdom: "))
             
-            print(rolls)
+            print(f"remaining rolls: {rolls}")            
 
             # --------
             # CHARISMA
             # --------
-            print("Last remaining = "+ str(rolls[0]) + ", assigned to Charisma")
+            print(f"Last remaining = {str(rolls[0])}, assigned to Charisma")
             self.cha = rolls[0]
+
+
         elif mode == "standard array":
             rolls = [15,14,13,12,10,8]
             print("Stats: " + str(rolls))
@@ -405,7 +426,3 @@ class Character:
             self.chasav = self.chamod
             # choose from a few skills
             # choose from a few starting options
-        
-Guyman = Character("Guyman")
-Guyman.stats("roll")
-Guyman.cls()
