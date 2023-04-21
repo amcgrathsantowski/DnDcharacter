@@ -26,7 +26,7 @@ class NoDiceError(Exception):
 
 def readscores(rolls):
     scorearray = [8,8,8,8,8,8] # str, dex, con, int, wis, cha
-    for title in ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]:
+    for i, title in enumerate(["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]):
         while True:
             try:
                 temp =  int(input(f"{title}: "))
