@@ -1,5 +1,3 @@
-from distutils.command.install import install
-from email.contentmanager import ContentManager
 import sys
 import subprocess
 
@@ -58,6 +56,12 @@ class Character:
         self.int = 8
         self.wis = 8
         self.cha = 8
+        self.strmod = ceil(self.stre / 2) - 5
+        self.dexmod = ceil(self.dex / 2) - 5
+        self.conmod = ceil(self.con / 2) - 5
+        self.intmod = ceil(self.int / 2) - 5
+        self.wismod = ceil(self.wis / 2) - 5
+        self.chamod = ceil(self.cha / 2) - 5
         self.level = 1
         self.clas = ""
         self.hitdie = 0
@@ -121,15 +125,15 @@ class Character:
                     """
                     try:
                         if int(tochange[0]) > 6 or int(tochange[0]) < 1:
-                            print("Error: position value must be between 1 and 6, inclusive")
+                            print("Error: position value must be between 1 and 6, inclusive\n")
                             continue
                         if tochange[1] != ',':
-                            print("Error: input must be of type #,#")
+                            print("Error: input must be of type #,#\n")
                         if int(tochange[2:]) < 8 or int(tochange[2:]) > 15:
-                            print("Error: new stat must be between 8 and 15, inclusive")
+                            print("Error: new stat must be between 8 and 15, inclusive\n")
                             continue
                     except ValueError:
-                        print("Error: input must be of type #,#")
+                        print("Error: input must be of type #,#\n")
                         continue
                     
                     newvalue = int(tochange[2:])
