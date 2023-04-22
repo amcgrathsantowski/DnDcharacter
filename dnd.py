@@ -165,7 +165,7 @@ class Character:
     # def __str__(self):
     #     return "Level =  %, class = %, race = %, background = %" % (self.level, self.cls, self.race, self.background)
     
-    def cls(self):
+    def get_class(self):
         print(
             """The available classes to choose from are:
             Artificer
@@ -182,25 +182,19 @@ class Character:
             Warlock
             Wizard
             """)
-        while self.clas != "":
-            print("test1")
+        while self.clas == "":
             inputclass = input(f"Which class is {self.name}? Choosing from the list above: ")
-            print("test2")
             inputclass.lower()
-            print("test3")
-            possclass = ["artificer", "barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorceror", "warlock", "wizard"]
-            if inputclass not in possclass:
+            possibleclass = ["artificer", "barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorceror", "warlock", "wizard"]
+            if inputclass not in possibleclass:
                 print("Error: must choose one of the available classes")
             else:
-                print("test4")
                 self.clas = inputclass
-        
-        print(self.clas)
-        
+                
         if self.clas == "artificer":
             self.hitdie = 8
             self.hp = self.hitdie + self.conmod
-            self.armorprof = ["light", "medium"]
+            self.armorprof = ["light", "medium", "shield"]
             self.weaponprof = ["simple"]
             self.toolprof = ["thieves", "tinkers"]
             self.strsav = self.strmod
@@ -213,7 +207,7 @@ class Character:
         elif self.clas == "barbarian":
             self.hitdie = 12
             self.hp = self.hitdie + self.conmod
-            self.armorprof = ["light", "medium"]
+            self.armorprof = ["light", "medium", "shield"]
             self.weaponprof = ["simple", "martial"]
             self.toolprof = []
             self.strsav = self.strmod + self.prof
@@ -222,3 +216,146 @@ class Character:
             self.intsav = self.intmod
             self.wissav = self.wismod
             self.chasav = self.chamod
+
+        elif self.clas == "bard":
+            self.hitdie = 8
+            self.hp = self.hitdie + self.conmod
+            self.armorprof = ["light"]
+            self.weaponprof = ["simple", "hand crossbow", "longsword", "rapier", "shortsword"]
+            self.toolprof = ["musical"]
+            self.strsav = self.strmod
+            self.dexsav = self.dexmod + self.prof
+            self.consav = self.conmod
+            self.intsav = self.intmod
+            self.wissav = self.wismod
+            self.chasav = self.chamod + self.prof
+
+        elif self.clas == "cleric":
+            self.hitdie = 8
+            self.hp = self.hitdie + self.conmod
+            self.armorprof = ["light", "medium", "shield"]
+            self.weaponprof = ["simple"]
+            self.toolprof = []
+            self.strsav = self.strmod
+            self.dexsav = self.dexmod
+            self.consav = self.conmod
+            self.intsav = self.intmod
+            self.wissav = self.wismod + self.prof
+            self.chasav = self.chamod + self.prof
+
+        elif self.clas == "druid":
+            self.hitdie = 8
+            self.hp = self.hitdie + self.conmod
+            self.armorprof = ["light", "medium", "shield"]
+            self.weaponprof = ["club", "dagger", "dart", "javelin", "mace", "quarterstaff", "scimitar", "sickle", "sling", "spear"]
+            self.toolprof = ["herbalism"]
+            self.strsav = self.strmod
+            self.dexsav = self.dexmod
+            self.consav = self.conmod
+            self.intsav = self.intmod + self.prof
+            self.wissav = self.wismod + self.prof
+            self.chasav = self.chamod
+
+        elif self.clas == "fighter":
+            self.hitdie = 10
+            self.hp = self.hitdie + self.conmod
+            self.armorprof = ["light", "medium", "shield", "heavy"]
+            self.weaponprof = ["simple", "martial"]
+            self.toolprof = []
+            self.strsav = self.strmod + self.prof
+            self.dexsav = self.dexmod
+            self.consav = self.conmod + self.prof
+            self.intsav = self.intmod
+            self.wissav = self.wismod
+            self.chasav = self.chamod
+
+        elif self.clas == "monk":
+            self.hitdie = 8
+            self.hp = self.hitdie + self.conmod
+            self.armorprof = []
+            self.weaponprof = ["simple", "shortsword"]
+            self.toolprof = [] # one type of artisan/musical instrument
+            self.strsav = self.strmod + self.prof
+            self.dexsav = self.dexmod + self.prof
+            self.consav = self.conmod
+            self.intsav = self.intmod
+            self.wissav = self.wismod
+            self.chasav = self.chamod
+
+        elif self.clas == "paladin":
+            self.hitdie = 10
+            self.hp = self.hitdie + self.conmod
+            self.armorprof = ["light", "medium", "shield", "heavy"]
+            self.weaponprof = ["simple", "martial"]
+            self.toolprof = []
+            self.strsav = self.strmod
+            self.dexsav = self.dexmod
+            self.consav = self.conmod
+            self.intsav = self.intmod
+            self.wissav = self.wismod + self.prof
+            self.chasav = self.chamod + self.prof
+
+        elif self.clas == "ranger":
+            self.hitdie = 10
+            self.hp = self.hitdie + self.conmod
+            self.armorprof = ["light", "medium", "shield"]
+            self.weaponprof = ["simple", "martial"]
+            self.toolprof = []
+            self.strsav = self.strmod + self.prof
+            self.dexsav = self.dexmod + self.prof
+            self.consav = self.conmod
+            self.intsav = self.intmod
+            self.wissav = self.wismod
+            self.chasav = self.chamod
+
+        elif self.clas == "rogue":
+            self.hitdie = 8
+            self.hp = self.hitdie + self.conmod
+            self.armorprof = ["light"]
+            self.weaponprof = ["simple", "hand crossbow", "longsword", "rapier", "shortsword"]
+            self.toolprof = ["thieves"]
+            self.strsav = self.strmod
+            self.dexsav = self.dexmod + self.prof
+            self.consav = self.conmod
+            self.intsav = self.intmod + self.prof
+            self.wissav = self.wismod
+            self.chasav = self.chamod
+
+        elif self.clas == "sorceror":
+            self.hitdie = 6
+            self.hp = self.hitdie + self.conmod
+            self.armorprof = []
+            self.weaponprof = ["dagger", "dart", "sling", "quarterstaff", "light crossbow"]
+            self.toolprof = []
+            self.strsav = self.strmod
+            self.dexsav = self.dexmod
+            self.consav = self.conmod + self.prof
+            self.intsav = self.intmod
+            self.wissav = self.wismod
+            self.chasav = self.chamod + self.prof
+
+        elif self.clas== "warlock":
+            self.hitdie = 8
+            self.hp = self.hitdie + self.conmod
+            self.armorprof = ["light"]
+            self.weaponprof = ["simple"]
+            self.toolprof = []
+            self.strsav = self.strmod
+            self.dexsav = self.dexmod
+            self.consav = self.conmod
+            self.intsav = self.intmod
+            self.wissav = self.wismod + self.prof
+            self.chasav = self.chamod + self.prof
+
+        elif self.clas == "wizard":
+            self.hitdie = 6
+            self.hp = self.hitdie + self.conmod
+            self.armorprof = []
+            self.weaponprof = ["dagger", "dart", "sling", "quarterstaff", "light crossbow"]
+            self.toolprof = []
+            self.strsav = self.strmod
+            self.dexsav = self.dexmod
+            self.consav = self.conmod
+            self.intsav = self.intmod + self.prof
+            self.wissav = self.wismod
+            self.chasav = self.chamod + self.prof
