@@ -78,11 +78,13 @@ while userinput != 0:
     elif userinput == 4:
         if user_character.clas == "":
             user_character.get_class()
+            user_character.get_skills()
         else:
             while True:
                 confirm = input(f"{user_character.name} is already a(n) {user_character.clas}, do you want to redo that? (y/n): ")            
                 if confirm.lower() == "y":
                     user_character.get_class()
+                    user_character.get_skills()
                     break
                 elif confirm.lower() == "n":
                     break
