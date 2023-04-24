@@ -1,7 +1,6 @@
 import sys
 import subprocess
 
-
 def install(package):
     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
@@ -72,6 +71,7 @@ class Character:
         self.savingthrow = []
         self.equipment = []
         self.prof = 2
+        self.skills = []
     
     def stats(self, mode):
         """
@@ -190,7 +190,7 @@ class Character:
             inputclass = input(f"Which class is {self.name}? Choosing from the list above: ")
             inputclass.lower()
             possibleclass = ["artificer", "barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorceror", "warlock", "wizard"]
-            if inputclass not in possibleclass:
+            if inputclass.lower() not in possibleclass:
                 print("Error: must choose one of the available classes")
             else:
                 self.clas = inputclass
@@ -338,7 +338,7 @@ class Character:
             self.wissav = self.wismod
             self.chasav = self.chamod + self.prof
 
-        elif self.clas== "warlock":
+        elif self.clas == "warlock":
             self.hitdie = 8
             self.hp = self.hitdie + self.conmod
             self.armorprof = ["light"]
@@ -363,3 +363,60 @@ class Character:
             self.intsav = self.intmod + self.prof
             self.wissav = self.wismod
             self.chasav = self.chamod + self.prof
+    
+    def get_skills(self):
+        if self.clas == "artificer":
+            nstats = 2
+            statoptions = ["arcana", "history", "investigation", "medicine", "nature", "perception", "sleight of hand"]
+        elif self.clas == "barbarian":
+            nstats = 2
+            statoptions = ["animal handing", "athletics", "intimidation", "nature", "perception", "survival"]
+        elif self.clas == "bard":
+            nstats = 3
+            statoptions = ["acrobatics", "animal handling", "arcana", "athletics", "deception", "history", "insight", "intimidation", "investigation", "medicine", "nature", "perception", "performance", "persuasion", "religion", "sleight of hand", "stealth", "survival"]
+        elif self.clas == "cleric":
+            nstats = 2
+            statoptions = ["history", "insight", "medicine", "perception", "religion"]
+        elif self.clas == "druid":
+            nstats = 2
+            statoptions = ["animal handling", "arcana", "insight", "medicine", "nature", "perception", "religion", "survival"]
+        elif self.clas == "fighter":
+            nstats = 2
+            statoptions = ["acrobatics", "animal handling", "athletics", "history", "insight", "intimidation", "perception", "survival"]
+        elif self.clas == "monk":
+            nstats = 2
+            statoptions = ["acrobatics", "athletics", "history", "insight", "religion", "stealth"]
+        elif self.clas == "paladin":
+            nstats = 2
+            statoptions = ["athletics", "insight", "intimidation", "medicine", "persuasion", "religion"]
+        elif self.clas == "ranger":
+            nstats = 3
+            statoptions = ["animal handling", "athletics", "insight", "investigation", "nature", "perception", "stealth", "survival"]
+        elif self.clas == "rogue":
+            nstats = 4
+            statoptions = ["acrobatics", "athletics", "deception", "insight", "intimidation", "investigation", "perception", "performance", "persuasion", "sleight of hand", "stealth"]
+        elif self.clas == "sorceror":
+            nstats = 2
+            statoptions = ["arcana", "deception", "insight", "intimidation", "persuasion", "religion"]
+        elif self.clas == "warlock":
+            nstats = 2
+            statoptions = ["arcana", "deception", "history", "insight", "intimidation", "investigation", "nature", "religion"]
+        elif self.clas == "wizard":
+            nstats = 2
+            statoptions = ["arcana", "history", "insight", "investigation", "medicine", "religion"]
+        
+        print(f"As a(n) {self.clas}, you can choose {nstats} skills from ", end = "")
+        for i in range(len(statoptions)):
+            print(statoptions[i], end = "")
+            if i != len(statoptions) - 1:
+                print(", ", end = "")
+        print("\n")
+        
+        for i in range(nstats):
+            while True:
+                skill = input(f"Skill {i + 1}: ")
+                if skill not in statoptions:
+                    print(f"Error: skill must be one of {statoptions}")
+                else:
+                    break
+            self.skills.append(skill)
