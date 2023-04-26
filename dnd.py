@@ -68,7 +68,6 @@ class Character:
         self.weaponprof = []
         self.toolprof = []
         self.hp = 0
-        self.savingthrow = []
         self.equipment = []
         self.prof = 2
         self.skills = []
@@ -165,9 +164,6 @@ class Character:
         self.intmod = ceil(self.int / 2) - 5
         self.wismod = ceil(self.wis / 2) - 5
         self.chamod = ceil(self.cha / 2) - 5
-
-    # def __str__(self):
-    #     return "Level =  %, class = %, race = %, background = %" % (self.level, self.cls, self.race, self.background)
     
     def get_class(self):
         print(
@@ -200,7 +196,7 @@ class Character:
             self.hp = self.hitdie + self.conmod
             self.armorprof = ["light", "medium", "shield"]
             self.weaponprof = ["simple"]
-            self.toolprof = ["thieves", "tinkers"]
+            self.toolprof = ["thieves' tools", "tinker's tools"]
             self.strsav = self.strmod
             self.dexsav = self.dexmod
             self.consav = self.conmod + self.prof
@@ -252,7 +248,7 @@ class Character:
             self.hp = self.hitdie + self.conmod
             self.armorprof = ["light", "medium", "shield"]
             self.weaponprof = ["club", "dagger", "dart", "javelin", "mace", "quarterstaff", "scimitar", "sickle", "sling", "spear"]
-            self.toolprof = ["herbalism"]
+            self.toolprof = ["herbalism kit"]
             self.strsav = self.strmod
             self.dexsav = self.dexmod
             self.consav = self.conmod
@@ -317,7 +313,7 @@ class Character:
             self.hp = self.hitdie + self.conmod
             self.armorprof = ["light"]
             self.weaponprof = ["simple", "hand crossbow", "longsword", "rapier", "shortsword"]
-            self.toolprof = ["thieves"]
+            self.toolprof = ["thieves' tools"]
             self.strsav = self.strmod
             self.dexsav = self.dexmod + self.prof
             self.consav = self.conmod
@@ -405,18 +401,72 @@ class Character:
             nstats = 2
             statoptions = ["arcana", "history", "insight", "investigation", "medicine", "religion"]
         
-        print(f"As a(n) {self.clas}, you can choose {nstats} skills from ", end = "")
-        for i in range(len(statoptions)):
-            print(statoptions[i], end = "")
-            if i != len(statoptions) - 1:
-                print(", ", end = "")
+        print(f"As a(n) {self.clas}, you can choose {nstats} skills from:")
+        for i, stat in enumerate(statoptions):
+            print(f"{i+1}: {stat[0].upper() + stat[1:]}")
         print("\n")
         
         for i in range(nstats):
             while True:
-                skill = input(f"Skill {i + 1}: ")
-                if skill not in statoptions:
-                    print(f"Error: skill must be one of {statoptions}")
+                skill = int(input(f"Skill {i + 1} (enter number): "))
+                if skill < 1 or skill > len(statoptions):
+                    print(f"Error: skill number must be between 1 and {len(statoptions)}")
+                elif skill in self.skills:
+                    print(f"Error: you already have proficiency in {statoptions[skill - 1][0].upper() + statoptions[skill - 1][1:]}")
                 else:
                     break
             self.skills.append(skill)
+
+    def get_tools(self):
+        artisanstools = ["alchemist's supplies", "brewer's supplies", "calligrapher's supplies", "carpenter's tools", 
+                         "cartographer's tools", "cobbler's tools", "cook's utensils", "glassblower's tools", "jeweler's tools",
+                         "leatherworker's tools", "mason's tools", "painter's supplies", "potter's tools", "smith's tools", 
+                         "tinker's tools", "weaver's tools", "woodcarver's tools"]
+        instruments = ["bagpipes", "drum", "dulcimer", "flute", "horn", "lute", "lyre", "pan flute", "shawm", "viol"]
+
+        if self.clas == "artificer":
+            print(f"You can choose one of the following tool proficiencies for your character: ")
+            for i, tool in enumerate(artisanstools):
+                print(f"{i + 1}: {tool[0].upper() + tool[1:]}")
+            
+            while True:
+                temptool = int(input("Which tool proficiency would you like? (enter number): "))
+                if temptool < 1 or temptool > len(artisanstools):
+                    print(f"Error: value must be between 1 and {len(artisanstools)}")
+                elif temptool in self.toolprof:
+                    print(f"Error: you already have proficiency in {artisanstools[temptool - 1][0].upper() + artisanstools[temptool - 1][1:]}")
+                else:
+                    self.toolprof.append(artisanstools[temptool - 1])
+                    break
+
+        elif self.clas == "bard":
+            print(f"You can choose 3 of the following instrument proficiencies for your character: ")
+            for i, instr in enumerate(instruments):
+                print(f"{i + 1}: {instr[0].upper() + instr[1:]}")
+            
+            for i in range(3):
+                while True:
+                    tempinstr = int(input(f"Instrument {i + 1} (enter number): "))
+                    if tempinstr < 1 or tempinstr > len(instruments):
+                        print(f"Error: value must be between 1 and {len(instruments)}")
+                    elif instruments[tempinstr - 1] in self.toolprof:
+                        print(f"Error: you already have proficiency in {instruments[tempinstr - 1][0].upper() + instruments[tempinstr - 1][1:]}")
+                    else:
+                        self.toolprof.append(instruments[tempinstr - 1])
+                        break
+    
+        elif self.clas == "monk":
+            alltools = instruments + artisanstools
+            print(f"You can choose one of the following instrument and tool proficiencies for your character: ")
+            for i, tool in enumerate(alltools):
+                print(f"{i + 1}: {tool[0].upper() + tool[1:]}")
+            
+            while True:
+                temptool = int(input("Which tool proficiency would you like? (enter number): "))
+                if temptool < 1 or temptool > len(alltools):
+                    print(f"Error: value must be between 1 and {len(alltools)}")
+                elif temptool in self.toolprof:
+                    print(f"Error: you already have proficiency in {alltools[temptool - 1][0].upper() + alltools[temptool - 1][1:]}")
+                else:
+                    self.toolprof.append(alltools[temptool - 1])
+                    break
