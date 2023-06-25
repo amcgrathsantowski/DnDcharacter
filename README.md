@@ -4,12 +4,12 @@ A basic command line character creation tool for Dungeons and Dragons 5e includi
 
 Done:
 - Stat generator
-
-Work in progress:
 - Class selection
 
+Work in progress:
+- Race Selection
+
 Plans:
-- Race seelction
 - Background selection
 - Further customizations to stat rolling
 - GUI
