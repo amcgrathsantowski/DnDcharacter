@@ -166,30 +166,16 @@ class Character:
         self.chamod = ceil(self.cha / 2) - 5
     
     def get_class(self):
-        print(
-            """The available classes to choose from are:
-            Artificer
-            Barbarian
-            Bard
-            Cleric
-            Druid
-            Fighter
-            Monk
-            Paladin
-            Ranger
-            Rogue
-            Sorceror
-            Warlock
-            Wizard
-            """)
+        possibleclass = ["artificer", "barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorceror", "warlock", "wizard"]
+        print("The available classes to choose from are:")
+        for i, possclass in enumerate(possibleclass):
+            print(f"{i+1}: {possclass[0].upper() + possclass[1:]}")
         while self.clas == "":
-            inputclass = input(f"Which class is {self.name}? Choosing from the list above: ")
-            inputclass.lower()
-            possibleclass = ["artificer", "barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue", "sorceror", "warlock", "wizard"]
-            if inputclass.lower() not in possibleclass:
-                print("Error: must choose one of the available classes")
+            inputclassnum = int(input(f"Which class is {self.name}? Choosing from the list above: "))
+            if (inputclassnum - 1) not in range(0,len(possibleclass)):
+                print(f"Error: input must be between 1 and {len(possibleclass)}")
             else:
-                self.clas = inputclass
+                self.clas = possibleclass[inputclassnum - 1]
                 
         if self.clas == "artificer":
             self.hitdie = 8
@@ -274,7 +260,7 @@ class Character:
             self.hp = self.hitdie + self.conmod
             self.armorprof = []
             self.weaponprof = ["simple", "shortsword"]
-            self.toolprof = [] # one type of artisan/musical instrument
+            self.toolprof = []
             self.strsav = self.strmod + self.prof
             self.dexsav = self.dexmod + self.prof
             self.consav = self.conmod

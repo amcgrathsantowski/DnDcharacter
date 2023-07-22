@@ -1,7 +1,7 @@
 from dnd import *
 
 user_character = Character("temp")
-userinput = 10
+userinput = -1
 
 while userinput != 0:
     print("Welcome to the DnD character builder! What would you like to do?\n"
